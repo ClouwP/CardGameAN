@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/achraffaress/Projects/cardGame/cardGame/cardGame.csproj": {}
+    "/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/cardGame.csproj": {}
   },
   "projects": {
-    "/Users/achraffaress/Projects/cardGame/cardGame/cardGame.csproj": {
+    "/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/cardGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/achraffaress/Projects/cardGame/cardGame/cardGame.csproj",
+        "projectUniqueName": "/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/cardGame.csproj",
         "projectName": "cardGame",
-        "projectPath": "/Users/achraffaress/Projects/cardGame/cardGame/cardGame.csproj",
+        "projectPath": "/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/cardGame.csproj",
         "packagesPath": "/Users/achraffaress/.nuget/packages/",
-        "outputPath": "/Users/achraffaress/Projects/cardGame/cardGame/obj/",
+        "outputPath": "/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/achraffaress/.config/NuGet/NuGet.Config"

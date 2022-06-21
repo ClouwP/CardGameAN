@@ -155,6 +155,115 @@ namespace cardGame
 
             return location;
         }
+
+        public List<Card> getLandCards(string player)
+        {
+
+            var location = new List<Card>();
+
+            if (player == "Player 1")
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name != "Empty")
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).CurrentState is StandbyState)
+                            {
+                                location.Add(this.Placement[i, j]);
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+            else
+            {
+                for (int i = 2; i < 4; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name != "Empty")
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).CurrentState is StandbyState)
+                            {
+                                location.Add(this.Placement[i, j]);
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+            return location;
+        }
+
+
+        public void ActivateLandCard(Card card, string player)
+        {
+            bool find = false;
+
+            if (player == "Player 1")
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name == card.Name)
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).CurrentState is StandbyState && find == false)
+                            {
+                                find = true;
+                                (this.Placement[i, j].GetCardType() as LandCard).UseCard();
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            else
+            {
+                for (int i = 2; i < 4; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name == card.Name)
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).CurrentState is StandbyState && find == false)
+                            {
+                                find = true;
+                                (this.Placement[i, j].GetCardType() as LandCard).UseCard();
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+        //Tijdelijk
+        public void CheckLandCards()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 6; j++)
+                {
+                    if (this.Placement[i, j].Name != "Empty")
+                    {
+                        if ((this.Placement[i, j].GetCardType() as LandCard).CurrentState is NewState || (this.Placement[i, j].GetCardType() as LandCard).CurrentState is NewState)
+                        {
+                            (this.Placement[i, j].GetCardType() as LandCard).StandbyCard();
+                        }
+                    }
+                }
+
+            }
+        }
     }
 
     public interface LandObserver

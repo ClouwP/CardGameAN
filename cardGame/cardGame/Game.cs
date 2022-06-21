@@ -16,6 +16,7 @@ namespace cardGame
         public Game()
         {
             var global = new Globals();
+            global.ActaveteCard();
             Console.WriteLine("Player 1 cards");
             this.Player1 = new Player("Player 1", new Deck(global.Deck1));
             Console.WriteLine("Press any key to go next");
@@ -66,6 +67,7 @@ namespace cardGame
 
             //Setting the card on the right place
             Console.WriteLine("Land Cards back to standby...");
+            board.CheckLandCards();
 
 
             Console.WriteLine("Press any key to go next");

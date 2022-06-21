@@ -45,9 +45,13 @@ namespace cardGame
             this.CardType = cardType;
         }
 
-        public void UseCard()
+        public string UseCard()
         {
-            this.CardType.UseCard();
+            if (this.CardType is LandCard)
+            {
+                return this.LandEnergieType.symbol;
+            }
+            return "";
         }
 
         public string GetInfo()
@@ -121,7 +125,7 @@ namespace cardGame
 
         public void UseCard()
         {
-
+            
         }
     }
 

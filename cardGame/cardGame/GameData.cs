@@ -83,6 +83,30 @@
             new Card("DragonKnigt",LandEnergieTypes.red,"🔴", new SpellCard(new Artefact(),0,5)),
             new Card("DragonKnigt",LandEnergieTypes.red,"🔴", new SpellCard(new Artefact(),0,5)),
         };
+
+
+        public void ActaveteCard()
+        {
+            (Deck1[18].GetCardType() as LandCard).CurrentState = new NewState((Deck1[18].GetCardType() as LandCard));
+            (Deck1[19].GetCardType() as LandCard).CurrentState = new NewState((Deck1[19].GetCardType() as LandCard));
+            (Deck1[20].GetCardType() as LandCard).CurrentState = new NewState((Deck1[20].GetCardType() as LandCard));
+            (Deck1[21].GetCardType() as LandCard).CurrentState = new NewState((Deck1[21].GetCardType() as LandCard));
+            (Deck1[22].GetCardType() as LandCard).CurrentState = new NewState((Deck1[22].GetCardType() as LandCard));
+            (Deck1[23].GetCardType() as LandCard).CurrentState = new NewState((Deck1[23].GetCardType() as LandCard));
+            (Deck1[24].GetCardType() as LandCard).CurrentState = new NewState((Deck1[24].GetCardType() as LandCard));
+            (Deck1[25].GetCardType() as LandCard).CurrentState = new NewState((Deck1[25].GetCardType() as LandCard));
+            (Deck1[26].GetCardType() as LandCard).CurrentState = new NewState((Deck1[26].GetCardType() as LandCard));
+
+            (Deck2[18].GetCardType() as LandCard).CurrentState = new NewState((Deck2[18].GetCardType() as LandCard));
+            (Deck2[19].GetCardType() as LandCard).CurrentState = new NewState((Deck2[19].GetCardType() as LandCard));
+            (Deck2[20].GetCardType() as LandCard).CurrentState = new NewState((Deck2[20].GetCardType() as LandCard));
+            (Deck2[21].GetCardType() as LandCard).CurrentState = new NewState((Deck2[21].GetCardType() as LandCard));
+            (Deck2[22].GetCardType() as LandCard).CurrentState = new NewState((Deck2[22].GetCardType() as LandCard));
+            (Deck2[23].GetCardType() as LandCard).CurrentState = new NewState((Deck2[23].GetCardType() as LandCard));
+            (Deck2[24].GetCardType() as LandCard).CurrentState = new NewState((Deck2[24].GetCardType() as LandCard));
+            (Deck2[25].GetCardType() as LandCard).CurrentState = new NewState((Deck2[25].GetCardType() as LandCard));
+            (Deck2[26].GetCardType() as LandCard).CurrentState = new NewState((Deck2[26].GetCardType() as LandCard));
+        }
     }
 
 

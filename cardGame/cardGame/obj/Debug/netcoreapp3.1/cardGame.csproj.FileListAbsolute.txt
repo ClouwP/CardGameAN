@@ -11,3 +11,16 @@
 /Users/achraffaress/Projects/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.dll
 /Users/achraffaress/Projects/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.pdb
 /Users/achraffaress/Projects/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.genruntimeconfig.cache
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/bin/Debug/netcoreapp3.1/cardGame.deps.json
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/bin/Debug/netcoreapp3.1/cardGame.runtimeconfig.json
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/bin/Debug/netcoreapp3.1/cardGame.runtimeconfig.dev.json
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/bin/Debug/netcoreapp3.1/cardGame.dll
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/bin/Debug/netcoreapp3.1/cardGame.pdb
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.csproj.AssemblyReference.cache
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.GeneratedMSBuildEditorConfig.editorconfig
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.AssemblyInfoInputs.cache
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.AssemblyInfo.cs
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.csproj.CoreCompileInputs.cache
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.dll
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.pdb
+/Users/achraffaress/Documents/GitHub/CardGameAN/cardGame/cardGame/obj/Debug/netcoreapp3.1/cardGame.genruntimeconfig.cache

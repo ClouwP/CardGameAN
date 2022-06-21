@@ -1,19 +1,35 @@
 ﻿namespace cardGame
 {
-    public interface ILandState : LandObserver
+    public abstract class LandState : LandObserver
     {
-        void changeState();
+        protected LandCard landcard;
+
+        public LandState(LandCard landCard)
+        {
+            this.landcard = landCard;
+        }
+
+        public abstract void Activate();
+        public abstract void Use();
+        public abstract void Standby();
     }
+
+
 
 
     public class LandCard : ICardType
     {
-        private ILandState CardState = new StandbyState();
+        private LandState CardState;
         private Permants Permants;
 
         public void UseCard()
         {
+            this.CardState.Use();
+        }
 
+        public void StandbyCard()
+        {
+            this.CardState.Standby();
         }
 
         public string GetState()
@@ -22,23 +38,95 @@
             {
                 return "Rotated";
             }
-            return "Straight";
+            else if (this.CardState is NewState) {
+                return "Loading";
+            }
+            else
+            {
+                return "Straight";
+            }
+            
+        }
+
+        public LandState CurrentState
+        {
+            get { return CardState; }
+            set { CardState = value; }
         }
     }
 
-    public class UseState : ILandState
+
+
+
+
+    public class UseState : LandState
     {
-        public void changeState()
+
+        public UseState(LandCard landCard) : base(landCard)
         {
 
         }
+
+        public override void Activate()
+        {
+            System.Console.WriteLine("Card not go back to Activate state");
+        }
+
+        public override void Standby()
+        {
+            this.landcard.CurrentState = new StandbyState(this.landcard);
+        }
+
+        public override void Use()
+        {
+            System.Console.WriteLine("Card is al used");
+        }
     }
 
-    public class StandbyState : ILandState
+    public class NewState : LandState
     {
-        public void changeState()
+        public NewState(LandCard landCard) : base(landCard)
         {
 
+        }
+
+        public override void Activate()
+        {
+            System.Console.WriteLine("Card not go back to Activate state");
+        }
+
+        public override void Standby()
+        {
+            this.landcard.CurrentState = new StandbyState(this.landcard);
+        }
+
+        public override void Use()
+        {
+            System.Console.WriteLine("Need to wait a round");
+        }
+
+    }
+
+    public class StandbyState : LandState
+    {
+        public StandbyState(LandCard landCard) : base(landCard)
+        {
+
+        }
+
+        public override void Activate()
+        {
+            System.Console.WriteLine("Card not go back to Activate state");
+        }
+
+        public override void Standby()
+        {
+            
+        }
+
+        public override void Use()
+        {
+            this.landcard.CurrentState = new UseState(this.landcard);
         }
     }
 }

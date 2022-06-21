@@ -36,9 +36,11 @@ namespace cardGame
             while (menuisRunning)
             {
                 Console.Clear();
-                Console.WriteLine("[1]: Use Landcard");
-                Console.WriteLine("[2]: Use SpellCard");
-                Console.WriteLine("[3]: Cancel placement");
+                Console.WriteLine("[1]: Place Landcard");
+                Console.WriteLine("[2]: Place Permants");
+                Console.WriteLine("[3]: Use Landcard");
+                Console.WriteLine("[4]: Use SpellCards");
+                Console.WriteLine("[5]: Cancel placement");
 
                 var userInput = Console.ReadLine();
 
@@ -141,7 +143,77 @@ namespace cardGame
                     Console.Clear();
                     Console.WriteLine("This cards can you place");
                 }
+
                 else if (userInput == "3")
+                {
+                    Console.Clear();
+                    var cards = board.getLandCards(this.Name);
+
+                    if (cards.Count > 0)
+                    {
+                        Console.WriteLine("This landCards you can use\n");
+
+                        for (int i = 0; i < cards.Count; i++)
+                        {
+                            Console.WriteLine($"[{i}] {cards[i].GetInfo()}");
+                        }
+
+                        Console.WriteLine("\nWhich Landcard do you wand to use");
+                        try
+                        {
+                            var userinput = Convert.ToInt32(Console.ReadLine());
+                            if (userinput < cards.Count)
+                            {
+                                board.ActivateLandCard(cards[userinput], this.Name);
+                                if (cards[userinput].UseCard() == "🔴")
+                                {
+                                    this.LandEnergies[0].Total += 1;
+                                }
+                                if (cards[userinput].UseCard() == "🔵")
+                                {
+                                    this.LandEnergies[1].Total += 1;
+                                }
+                                if (cards[userinput].UseCard() == "⚪")
+                                {
+                                    this.LandEnergies[2].Total += 1;
+                                }
+                                if (cards[userinput].UseCard() == "🟢")
+                                {
+                                    this.LandEnergies[3].Total += 1;
+                                }
+                                if (cards[userinput].UseCard() == "🟤")
+                                {
+                                    this.LandEnergies[4].Total += 1;
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Wrong input");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Wrong input");
+                        }
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("You don't have LandCard to use");
+                        Console.WriteLine("Press any key to go next");
+                        Console.ReadLine();
+                    }
+
+                    Console.Clear();
+                }
+
+                else if (userInput == "4")
+                {
+                    Console.Clear();
+                    Console.WriteLine("This cards can you place");
+                }
+
+                else if (userInput == "5")
                 {
                     Console.Clear();
                     menuisRunning = false;
