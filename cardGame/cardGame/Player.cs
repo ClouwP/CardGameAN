@@ -7,7 +7,7 @@ namespace cardGame
     public class Player
     {
         private Deck Deck;
-        private Action<string,int> Attack;
+        private Action<string, int> Attack;
         private int Health = 10;
         private List<LandEnergie> LandEnergies = new List<LandEnergie>() {
             new LandEnergie(LandEnergieTypes.red, "🔴"),
@@ -55,7 +55,8 @@ namespace cardGame
                 Console.WriteLine("[3]: Use Landcard");
                 Console.WriteLine("[4]: Attack whith Permants");
                 Console.WriteLine("[5]: Use SpellCards");
-                Console.WriteLine("[6]: Cancel placement");
+                Console.WriteLine("[6]: Use Artefact");
+                Console.WriteLine("[7]: Cancel placement");
 
                 var userInput = Console.ReadLine();
 
@@ -82,7 +83,7 @@ namespace cardGame
 
                     if (count != 0)
                     {
-                    
+
                         Console.WriteLine("Which landcard do you wand to place\n");
 
                         Console.WriteLine(LandCards);
@@ -131,8 +132,8 @@ namespace cardGame
                                 Console.WriteLine("Press any key to go next");
                                 Console.ReadLine();
                             }
-                            
-                            
+
+
                         }
                         catch (Exception ex)
                         {
@@ -472,7 +473,285 @@ namespace cardGame
                     }
                 }
 
+
+                else if (userInput == "5")
+                {
+                    Console.Clear();
+                    Console.WriteLine("This cards you can use");
+
+                    var LandCards = "";
+                    var count = 0;
+                    var listcount = 0;
+                    var location = new List<Tuple<int, int>>();
+
+
+                    for (int i = 0; i < this.CardsInHand.Count; i++)
+                    {
+                        if (this.CardsInHand[i].GetCardType() is SpellCard)
+                        {
+                            if ((this.CardsInHand[i].GetCardType() as SpellCard).TypeSpellCard is Instantaneous)
+                            {
+                                if (this.CardsInHand[i].GetLandEnergieType().symbol == "🔴")
+                                {
+                                    if (this.LandEnergies[0].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                    {
+                                        LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                        location.Add(Tuple.Create(count, listcount));
+                                        count += 1;
+                                    }
+                                }
+
+                                if (this.CardsInHand[i].GetLandEnergieType().symbol == "🔵")
+                                {
+                                    if (this.LandEnergies[1].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                    {
+                                        LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                        location.Add(Tuple.Create(count, listcount));
+                                        count += 1;
+                                    }
+                                }
+
+                                if (this.CardsInHand[i].GetLandEnergieType().symbol == "⚪")
+                                {
+                                    if (this.LandEnergies[2].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                    {
+                                        LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                        location.Add(Tuple.Create(count, listcount));
+                                        count += 1;
+                                    }
+                                }
+
+                                if (this.CardsInHand[i].GetLandEnergieType().symbol == "🟢")
+                                {
+                                    if (this.LandEnergies[3].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                    {
+                                        LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                        location.Add(Tuple.Create(count, listcount));
+                                        count += 1;
+                                    }
+                                }
+                                if (this.CardsInHand[i].GetLandEnergieType().symbol == "🟤")
+                                {
+                                    if (this.LandEnergies[4].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                    {
+                                        LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                        location.Add(Tuple.Create(count, listcount));
+                                        count += 1;
+                                    }
+                                }
+                            }
+                        }
+
+                        listcount += 1;
+                    }
+
+                    if (count != 0)
+                    {
+
+                        Console.WriteLine("Which Instantaneous spells do you wand to use\n");
+
+                        Console.WriteLine(LandCards);
+
+                        try
+                        {
+                            var userinput = Convert.ToInt32(Console.ReadLine());
+                            if (userinput < count)
+                            {
+                                if (this.CardsInHand[userinput].GetLandEnergieType().symbol == "🔴")
+                                {
+                                    this.LandEnergies[0].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                }
+
+                                if (this.CardsInHand[userinput].GetLandEnergieType().symbol == "🔵")
+                                {
+                                    this.LandEnergies[1].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                }
+
+                                if (this.CardsInHand[userinput].GetLandEnergieType().symbol == "⚪")
+                                {
+                                    this.LandEnergies[2].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                }
+
+                                if (this.CardsInHand[userinput].GetLandEnergieType().symbol == "🟢")
+                                {
+                                    this.LandEnergies[3].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                }
+                                if (this.CardsInHand[userinput].GetLandEnergieType().symbol == "🟤")
+                                {
+                                    this.LandEnergies[4].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                }
+
+
+                                board.AddSpell(this.CardsInHand[userinput], this.Name);
+                                this.CardsInHand.RemoveAt(location[userinput].Item2);
+
+
+                                menuisRunning = false;
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Not a option");
+                                Console.WriteLine("Press any key to go next");
+                                Console.ReadLine();
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Incorrect input");
+                            Console.WriteLine("Press any key to go next");
+                            Console.ReadLine();
+                        }
+
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("You don't have any Instantaneous");
+                        Console.WriteLine("Press any key to go next");
+                        Console.ReadLine();
+                    }
+                }
+
                 else if (userInput == "6")
+                {
+                    Console.Clear();
+                    Console.WriteLine("This cards you can use");
+
+                    var LandCards = "";
+                    var count = 0;
+                    var listcount = 0;
+                    var location = new List<Tuple<int, int>>();
+
+
+                    for (int i = 0; i < this.CardsInHand.Count; i++)
+                    {
+                        if (this.CardsInHand[i].GetCardType() is SpellCard)
+                        {
+                            if ((this.CardsInHand[i].GetCardType() as SpellCard).TypeSpellCard is Artefact)
+                            {
+
+                                if (this.LandEnergies[0].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                {
+                                    LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                    location.Add(Tuple.Create(count, listcount));
+                                    count += 1;
+                                }
+
+
+
+                                else if (this.LandEnergies[1].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                {
+                                    LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                    location.Add(Tuple.Create(count, listcount));
+                                    count += 1;
+                                }
+
+
+
+                                else if (this.LandEnergies[2].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                {
+                                    LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                    location.Add(Tuple.Create(count, listcount));
+                                    count += 1;
+                                }
+
+
+
+                                else if (this.LandEnergies[3].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                {
+                                    LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                    location.Add(Tuple.Create(count, listcount));
+                                    count += 1;
+                                }
+
+
+                                else if (this.LandEnergies[4].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                {
+                                    LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                    location.Add(Tuple.Create(count, listcount));
+                                    count += 1;
+                                }
+
+                            }
+                        }
+
+                        listcount += 1;
+                    }
+
+                    if (count != 0)
+                    {
+
+                        Console.WriteLine("Which Artefact spells do you wand to use\n");
+
+                        Console.WriteLine(LandCards);
+
+                        try
+                        {
+                            var userinput = Convert.ToInt32(Console.ReadLine());
+                            if (userinput < count)
+                            {
+                                if (this.LandEnergies[0].Total >= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice())
+                                {
+                                    this.LandEnergies[0].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                }
+
+                                if (this.LandEnergies[1].Total >= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice())
+                                {
+                                    this.LandEnergies[1].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                }
+
+                                if (this.LandEnergies[2].Total >= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice())
+                                {
+                                    this.LandEnergies[2].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                }
+
+                                if (this.LandEnergies[3].Total >= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice())
+                                {
+                                    this.LandEnergies[3].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                }
+                                if (this.LandEnergies[4].Total >= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice())
+                                {
+                                    this.LandEnergies[4].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                }
+
+
+                                board.AddSpell(this.CardsInHand[userinput], this.Name);
+                                this.CardsInHand.RemoveAt(location[userinput].Item2);
+
+
+                                menuisRunning = false;
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Not a option");
+                                Console.WriteLine("Press any key to go next");
+                                Console.ReadLine();
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Incorrect input");
+                            Console.WriteLine("Press any key to go next");
+                            Console.ReadLine();
+                        }
+
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("You don't have any Artefact");
+                        Console.WriteLine("Press any key to go next");
+                        Console.ReadLine();
+                    }
+                }
+
+                else if (userInput == "7")
                 {
                     Console.Clear();
                     menuisRunning = false;

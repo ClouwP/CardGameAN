@@ -7,12 +7,27 @@ namespace cardGame
     {
         private List<Card> Cards = new List<Card>();
 
-        public Deck(Card[] cards)
+        public Deck()
         {
-            for (int i = 0; i < 30; i++)
-            {
-                Cards.Add(cards[i]);
-            }
+            var factory = new CardCreator();
+            
+                for (int b = 0; b < 5; b++)
+                {
+                    this.Cards.Add(factory.Factroy("Artefact"));
+                }
+                for (int b = 0; b < 9; b++)
+                {
+                    this.Cards.Add(factory.Factroy("LandCard"));
+                }
+                for (int b = 0; b < 7; b++)
+                {
+                    this.Cards.Add(factory.Factroy("Instantaneous"));
+                }
+                for (int b = 0; b < 9; b++)
+                {
+                    this.Cards.Add(factory.Factroy("Pre"));
+                }
+            
         }
 
         public Card GiveCard()
@@ -113,7 +128,7 @@ namespace cardGame
     public class SpellCard : ICardType
     {
         public ISpellCardType TypeSpellCard;
-        private int CardState;
+        public int CardState;
         private int EnergiePrice;
 
         public SpellCard(ISpellCardType spellCardType, int cardState, int enrgiePrice)
@@ -141,9 +156,16 @@ namespace cardGame
 
     public class Artefact : ISpellCardType
     {
+        public int Type;
+        public bool active = false;
+
+        public Artefact(int type)
+        {
+            this.Type = type;
+        }
         public void ActavateSpell()
         {
-
+            this.active = true;
         }
     }
 
@@ -154,8 +176,10 @@ namespace cardGame
 
         public void ActavateSpell()
         {
-
+            this.isUsed = true;
         }
+
+        public int getEffect() => this.effect;
     }
 
     public class Permants : ISpellCardType
@@ -204,6 +228,21 @@ namespace cardGame
         {
             AtackMode = true;
             return this.power;
+        }
+
+        public void addHealt(int health)
+        {
+            this.defense += health;
+        }
+
+        public void addPower(int power)
+        {
+            this.power += power;
+        }
+
+        public void delPower(int power)
+        {
+            this.power -= power;
         }
     }
 

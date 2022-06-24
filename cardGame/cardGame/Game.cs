@@ -15,16 +15,15 @@ namespace cardGame
 
         public Game()
         {
-            var global = new Globals();
-            global.ActaveteCard();
+            
             Console.WriteLine("Player 1 cards");
-            this.Player1 = new Player("Player 1", new Deck(global.Deck1), AttackPlayer);
+            this.Player1 = new Player("Player 1", new Deck(), AttackPlayer);
             Console.WriteLine("Press any key to go next");
             Console.ReadLine();
             Console.Clear();
 
             Console.WriteLine("Player 2 cards");
-            this.Player2 = new Player("Player 2", new Deck(global.Deck2), AttackPlayer);
+            this.Player2 = new Player("Player 2", new Deck(), AttackPlayer);
 
             this.board =  Board.Instance;
             this.board.GenerateBoard();
@@ -75,7 +74,8 @@ namespace cardGame
             Console.WriteLine("PreparationFhase");
 
             //Removing the cards that are in effect
-            Console.WriteLine("Removing the temporary effecs...");
+            Console.WriteLine("Removing or activating the temporary effecs...");
+            board.CheckSpells();
 
             //Setting the card on the right place
             Console.WriteLine("Land Cards back to standby...");
