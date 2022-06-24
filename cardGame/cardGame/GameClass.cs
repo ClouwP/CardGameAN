@@ -12,9 +12,23 @@ namespace cardGame
 
     }
 
-    public class Board
+    public sealed class Board
     {
         private Card[,] Placement = new Card[4, 6];
+        private Board() { }
+        private static Board instance = null;
+
+        public static Board Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Board();
+                }
+                return instance;
+            }
+        }
 
         public void GenerateBoard()
         {
@@ -79,7 +93,14 @@ namespace cardGame
                 //Monster
                 for (int j = 0; j < Placement.GetLength(1); j++)
                 {
-                    board += " " +  Placement[i, j].Name + "  | ";
+                    if ((Placement[i, j].GetCardType() as LandCard).getPermants() == null)
+                    {
+                        board += " " + "Empty" + "  | ";
+                    }
+                    else
+                    {
+                        board += "Monster" + " | ";
+                    }
 
                 }
 
@@ -91,7 +112,14 @@ namespace cardGame
                 for (int j = 0; j < Placement.GetLength(1); j++)
                 {
 
-                    board += " " + Placement[i, j].Name + "  | ";
+                    if((Placement[i, j].GetCardType() as LandCard).getPermants() == null)
+                    {
+                        board += " " + "Empty" + "  | ";
+                    }
+                    else
+                    {
+                        board += (Placement[i, j].GetCardType() as LandCard).getPermants().getInfo() + " | ";
+                    }
 
                 }
 
@@ -116,7 +144,15 @@ namespace cardGame
 
         public void PlaceCard(int x, int b, Card card)
         {
-            this.Placement[x, b] = card;
+            if(card.GetCardType() is LandCard)
+            {
+                this.Placement[x, b] = card;
+            }
+            else
+            {
+                (this.Placement[x, b].GetCardType() as LandCard).setPermants(((card.GetCardType() as SpellCard).TypeSpellCard as Permants));
+            }
+
         }
 
         public List<Tuple<int, int>> GetOpenPlace(string player)
@@ -147,6 +183,50 @@ namespace cardGame
                         if (this.Placement[i, j].Name == "Empty")
                         {
                             location.Add(Tuple.Create(i, j));
+                        }
+                    }
+
+                }
+            }
+
+            return location;
+        }
+
+
+        public List<Tuple<int, int>> GetOpenLandCards(string player)
+        {
+            var location = new List<Tuple<int, int>>();
+
+            if (player == "Player 1")
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name != "Empty")
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).getPermants() == null )
+                            {
+                                location.Add(Tuple.Create(i, j));
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            else
+            {
+                for (int i = 2; i < 4; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name != "Empty")
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).getPermants() == null)
+                            {
+                                location.Add(Tuple.Create(i, j));
+                            }
                         }
                     }
 
@@ -255,7 +335,7 @@ namespace cardGame
                 {
                     if (this.Placement[i, j].Name != "Empty")
                     {
-                        if ((this.Placement[i, j].GetCardType() as LandCard).CurrentState is NewState || (this.Placement[i, j].GetCardType() as LandCard).CurrentState is NewState)
+                        if ((this.Placement[i, j].GetCardType() as LandCard).CurrentState is UseState || (this.Placement[i, j].GetCardType() as LandCard).CurrentState is NewState)
                         {
                             (this.Placement[i, j].GetCardType() as LandCard).StandbyCard();
                         }

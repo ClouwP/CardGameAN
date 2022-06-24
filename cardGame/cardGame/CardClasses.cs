@@ -112,7 +112,7 @@ namespace cardGame
 
     public class SpellCard : ICardType
     {
-        private ISpellCardType TypeSpellCard;
+        public ISpellCardType TypeSpellCard;
         private int CardState;
         private int EnergiePrice;
 
@@ -126,6 +126,11 @@ namespace cardGame
         public void UseCard()
         {
             
+        }
+
+        public int GetEnergiePrice()
+        {
+            return EnergiePrice;
         }
     }
 
@@ -157,6 +162,7 @@ namespace cardGame
     {
         private int power;
         private int defense;
+        private bool AtackMode = false;
 
         public Permants(int p, int d)
         {
@@ -166,7 +172,27 @@ namespace cardGame
 
         public void ActavateSpell()
         {
+            AtackMode = true;
+        }
 
+        public void reset()
+        {
+            AtackMode = false;
+        }
+
+        public void getDamage(int damage)
+        {
+            this.defense -= damage;
+        }
+
+        public int getHealth()
+        {
+            return defense;
+        }
+
+        public string getInfo()
+        {
+            return $"P:{this.power}, D:{this.defense}";
         }
     }
 

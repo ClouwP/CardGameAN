@@ -48,6 +48,16 @@
             
         }
 
+        public Permants getPermants()
+        {
+            return this.Permants;
+        }
+
+        public void setPermants(Permants per)
+        {
+            this.Permants = per;
+        }
+
         public LandState CurrentState
         {
             get { return CardState; }

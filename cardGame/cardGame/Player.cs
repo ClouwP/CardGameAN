@@ -142,6 +142,142 @@ namespace cardGame
                 {
                     Console.Clear();
                     Console.WriteLine("This cards can you place");
+
+                    var LandCards = "";
+                    var count = 0;
+                    var listcount = 0;
+                    var location = new List<Tuple<int, int>>();
+
+
+                    for (int i = 0; i < this.CardsInHand.Count; i++)
+                    {
+                        if (this.CardsInHand[i].GetCardType() is SpellCard)
+                        {
+                            if ((this.CardsInHand[i].GetCardType() as SpellCard).TypeSpellCard is Permants)
+                            {
+                                if (this.CardsInHand[i].GetLandEnergieType().symbol == "🔴")
+                                {
+                                    if (this.LandEnergies[0].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                    {
+                                        LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                        location.Add(Tuple.Create(count, listcount));
+                                        count += 1;
+                                    }
+                                }
+
+                                if (this.CardsInHand[i].GetLandEnergieType().symbol == "🔵")
+                                {
+                                    if (this.LandEnergies[1].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                    {
+                                        LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                        location.Add(Tuple.Create(count, listcount));
+                                        count += 1;
+                                    }
+                                }
+
+                                if (this.CardsInHand[i].GetLandEnergieType().symbol == "⚪")
+                                {
+                                    if (this.LandEnergies[2].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                    {
+                                        LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                        location.Add(Tuple.Create(count, listcount));
+                                        count += 1;
+                                    }
+                                }
+
+                                if (this.CardsInHand[i].GetLandEnergieType().symbol == "🟢")
+                                {
+                                    if (this.LandEnergies[3].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                    {
+                                        LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                        location.Add(Tuple.Create(count, listcount));
+                                        count += 1;
+                                    }
+                                }
+                                if (this.CardsInHand[i].GetLandEnergieType().symbol == "🟤")
+                                {
+                                    if (this.LandEnergies[4].Total >= (this.CardsInHand[i].GetCardType() as SpellCard).GetEnergiePrice())
+                                    {
+                                        LandCards += $"[{count}] {this.CardsInHand[i].GetInfo()}\n";
+                                        location.Add(Tuple.Create(count, listcount));
+                                        count += 1;
+                                    }
+                                }
+                            }
+                        }
+
+                        listcount += 1;
+                    }
+
+                    if (count != 0)
+                    {
+
+                        Console.WriteLine("Which Permants do you wand to place\n");
+
+                        Console.WriteLine(LandCards);
+
+                        try
+                        {
+                            var userinput = Convert.ToInt32(Console.ReadLine());
+                            if (userinput < count)
+                            {
+                                var postions = board.GetOpenLandCards(this.Name);
+
+
+                                for (int i = 0; i < postions.Count; i++)
+                                {
+                                    Console.WriteLine($"[{i}] Postion {postions[i].Item1 + 1}.{postions[i].Item2 + 1}");
+                                }
+
+                                try
+                                {
+                                    var postioninput = Convert.ToInt32(Console.ReadLine());
+
+                                    if (postioninput < postions.Count)
+                                    {
+                                        board.PlaceCard(postions[postioninput].Item1, postions[postioninput].Item2, this.CardsInHand[location[userinput].Item2]);
+                                        this.CardsInHand.RemoveAt(location[userinput].Item2);
+
+                                        menuisRunning = false;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Not a option");
+                                        Console.WriteLine("Press any key to go next");
+                                        Console.ReadLine();
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine("Incorrect input");
+                                    Console.WriteLine("Press any key to go next");
+                                    Console.ReadLine();
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Not a option");
+                                Console.WriteLine("Press any key to go next");
+                                Console.ReadLine();
+                            }
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Incorrect input");
+                            Console.WriteLine("Press any key to go next");
+                            Console.ReadLine();
+                        }
+
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("You don't have any Permants");
+                        Console.WriteLine("Press any key to go next");
+                        Console.ReadLine();
+                    }
                 }
 
                 else if (userInput == "3")

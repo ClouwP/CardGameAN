@@ -26,7 +26,7 @@ namespace cardGame
             Console.WriteLine("Player 2 cards");
             this.Player2 = new Player("Player 2", new Deck(global.Deck2));
 
-            this.board = new Board();
+            this.board =  Board.Instance;
             this.board.GenerateBoard();
 
             Console.WriteLine("Press any key to go next");
