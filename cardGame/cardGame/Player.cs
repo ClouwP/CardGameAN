@@ -7,6 +7,7 @@ namespace cardGame
     public class Player
     {
         private Deck Deck;
+        private Action<string,int> Attack;
         private int Health = 10;
         private List<LandEnergie> LandEnergies = new List<LandEnergie>() {
             new LandEnergie(LandEnergieTypes.red, "🔴"),
@@ -18,15 +19,28 @@ namespace cardGame
         private List<Card> CardsInHand = new List<Card>();
         public string Name;
 
-        public Player(string name, Deck deck)
+        public Player(string name, Deck deck, Action<string, int> attack)
         {
             this.Deck = deck;
             this.Name = name;
+            this.Attack = attack;
+
+
+            this.LandEnergies[0].Total = 100;
+            this.LandEnergies[1].Total = 100;
+            this.LandEnergies[2].Total = 100;
+            this.LandEnergies[3].Total = 100;
+            this.LandEnergies[4].Total = 100;
 
             for (int i = 0; i < 7; i++)
             {
                 CardsInHand.Add(this.Deck.GiveCard());
             }
+        }
+
+        public void GetAttackt(int damage)
+        {
+            this.Health -= damage;
         }
 
 
@@ -39,8 +53,9 @@ namespace cardGame
                 Console.WriteLine("[1]: Place Landcard");
                 Console.WriteLine("[2]: Place Permants");
                 Console.WriteLine("[3]: Use Landcard");
-                Console.WriteLine("[4]: Use SpellCards");
-                Console.WriteLine("[5]: Cancel placement");
+                Console.WriteLine("[4]: Attack whith Permants");
+                Console.WriteLine("[5]: Use SpellCards");
+                Console.WriteLine("[6]: Cancel placement");
 
                 var userInput = Console.ReadLine();
 
@@ -235,8 +250,35 @@ namespace cardGame
 
                                     if (postioninput < postions.Count)
                                     {
+
+
+                                        if (this.CardsInHand[userinput].GetLandEnergieType().symbol == "🔴")
+                                        {
+                                            this.LandEnergies[0].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                        }
+
+                                        if (this.CardsInHand[userinput].GetLandEnergieType().symbol == "🔵")
+                                        {
+                                            this.LandEnergies[1].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                        }
+
+                                        if (this.CardsInHand[userinput].GetLandEnergieType().symbol == "⚪")
+                                        {
+                                            this.LandEnergies[2].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                        }
+
+                                        if (this.CardsInHand[userinput].GetLandEnergieType().symbol == "🟢")
+                                        {
+                                            this.LandEnergies[3].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                        }
+                                        if (this.CardsInHand[userinput].GetLandEnergieType().symbol == "🟤")
+                                        {
+                                            this.LandEnergies[4].Total -= (this.CardsInHand[userinput].GetCardType() as SpellCard).GetEnergiePrice();
+                                        }
+
                                         board.PlaceCard(postions[postioninput].Item1, postions[postioninput].Item2, this.CardsInHand[location[userinput].Item2]);
                                         this.CardsInHand.RemoveAt(location[userinput].Item2);
+
 
                                         menuisRunning = false;
                                     }
@@ -346,10 +388,91 @@ namespace cardGame
                 else if (userInput == "4")
                 {
                     Console.Clear();
-                    Console.WriteLine("This cards can you place");
+                    var monster = board.GetMyPermants(this.Name);
+
+                    if (monster.Count > 0)
+                    {
+                        Console.WriteLine("This Permants you can use\n");
+
+                        for (int i = 0; i < monster.Count; i++)
+                        {
+                            Console.WriteLine($"[{i}] Permant: {monster[i].Item3}");
+                        }
+
+                        Console.WriteLine("\nWhich Permants do you wand to use");
+
+                        try
+                        {
+                            var postioninput = Convert.ToInt32(Console.ReadLine());
+
+                            if (postioninput < monster.Count)
+                            {
+
+                                if (board.CheckEnemy(this.Name))
+                                {
+                                    var enimyMoster = board.GetEnimyPremants(this.Name);
+
+                                    Console.WriteLine("This Permants you can attack\n");
+
+                                    for (int i = 0; i < enimyMoster.Count; i++)
+                                    {
+                                        Console.WriteLine($"[{i}] Permant: {enimyMoster[i].Item3}");
+                                    }
+
+                                    Console.WriteLine("\nWhich Permants do you wand to attack");
+
+                                    try
+                                    {
+                                        var tarcket = Convert.ToInt32(Console.ReadLine());
+
+                                        if (tarcket < enimyMoster.Count)
+                                        {
+                                            board.attackPermant(enimyMoster[tarcket], monster[postioninput]);
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Not a option");
+                                            Console.WriteLine("Press any key to go next");
+                                            Console.ReadLine();
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Console.WriteLine("Not a option");
+                                        Console.WriteLine("Press any key to go next");
+                                        Console.ReadLine();
+                                    }
+                                }
+                                else
+                                {
+                                    this.Attack(this.Name, board.GetPower(monster[postioninput]));
+                                }
+
+                                menuisRunning = false;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Not a option");
+                                Console.WriteLine("Press any key to go next");
+                                Console.ReadLine();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Not a option");
+                            Console.WriteLine("Press any key to go next");
+                            Console.ReadLine();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("You dont't have any monsters");
+                        Console.WriteLine("Press any key to go next");
+                        Console.ReadLine();
+                    }
                 }
 
-                else if (userInput == "5")
+                else if (userInput == "6")
                 {
                     Console.Clear();
                     menuisRunning = false;

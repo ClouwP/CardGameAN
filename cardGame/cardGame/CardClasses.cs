@@ -190,9 +190,20 @@ namespace cardGame
             return defense;
         }
 
+        public bool getState()
+        {
+            return !AtackMode;
+        }
+
         public string getInfo()
         {
             return $"P:{this.power}, D:{this.defense}";
+        }
+
+        public int attack()
+        {
+            AtackMode = true;
+            return this.power;
         }
     }
 

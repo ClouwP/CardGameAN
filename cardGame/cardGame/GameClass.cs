@@ -236,6 +236,94 @@ namespace cardGame
             return location;
         }
 
+
+        public List<Tuple<int, int, string>> GetMyPermants(string player)
+        {
+            var location = new List<Tuple<int, int,string>>();
+
+            if (player == "Player 1")
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name != "Empty")
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).getPermants() != null && (this.Placement[i, j].GetCardType() as LandCard).getPermants().getState())
+                            {
+                                location.Add(Tuple.Create(i, j, (this.Placement[i, j].GetCardType() as LandCard).getPermants().getInfo()));
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            else
+            {
+                for (int i = 2; i < 4; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name != "Empty")
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).getPermants() != null && (this.Placement[i, j].GetCardType() as LandCard).getPermants().getState())
+                            {
+                                location.Add(Tuple.Create(i, j, (this.Placement[i, j].GetCardType() as LandCard).getPermants().getInfo()));
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            return location;
+        }
+
+        public List<Tuple<int, int, string>> GetEnimyPremants(string player)
+        {
+            var location = new List<Tuple<int, int, string>>();
+
+            if (player == "Player 2")
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name != "Empty")
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).getPermants() != null )
+                            {
+                                location.Add(Tuple.Create(i, j, (this.Placement[i, j].GetCardType() as LandCard).getPermants().getInfo()));
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            else
+            {
+                for (int i = 2; i < 4; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name != "Empty")
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).getPermants() != null)
+                            {
+                                location.Add(Tuple.Create(i, j, (this.Placement[i, j].GetCardType() as LandCard).getPermants().getInfo()));
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            return location;
+        }
+
+
         public List<Card> getLandCards(string player)
         {
 
@@ -344,6 +432,67 @@ namespace cardGame
 
             }
         }
+
+        public bool CheckEnemy(string player)
+        {
+            if (player == "Player 1")
+            {
+                for (int i = 2; i < 4; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name != "Empty")
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).getPermants() != null)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (this.Placement[i, j].Name != "Empty")
+                        {
+                            if ((this.Placement[i, j].GetCardType() as LandCard).getPermants() != null)
+                            {
+                                return true;
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            return false;
+        }
+
+
+        public void attackPermant(Tuple<int,int,string> permant, Tuple<int, int, string> yourMonster)
+        {
+            (this.Placement[permant.Item1, permant.Item2].GetCardType() as LandCard).getPermants().getDamage((this.Placement[permant.Item1, permant.Item2].GetCardType() as LandCard).getPermants().attack());
+
+            if ((this.Placement[permant.Item1, permant.Item2].GetCardType() as LandCard).getPermants().getHealth() <= 0)
+            {
+                (this.Placement[permant.Item1, permant.Item2].GetCardType() as LandCard).setPermants(null);
+
+                Console.WriteLine("Permants dead");
+                Console.WriteLine("Press any key to go next");
+                Console.ReadLine();
+            }
+        }
+
+        public int GetPower(Tuple<int, int, string> permant)
+        {
+            return (this.Placement[permant.Item1,permant.Item2].GetCardType() as LandCard).getPermants().attack();
+        }
+
     }
 
     public interface LandObserver

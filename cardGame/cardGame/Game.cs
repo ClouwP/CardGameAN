@@ -18,13 +18,13 @@ namespace cardGame
             var global = new Globals();
             global.ActaveteCard();
             Console.WriteLine("Player 1 cards");
-            this.Player1 = new Player("Player 1", new Deck(global.Deck1));
+            this.Player1 = new Player("Player 1", new Deck(global.Deck1), AttackPlayer);
             Console.WriteLine("Press any key to go next");
             Console.ReadLine();
             Console.Clear();
 
             Console.WriteLine("Player 2 cards");
-            this.Player2 = new Player("Player 2", new Deck(global.Deck2));
+            this.Player2 = new Player("Player 2", new Deck(global.Deck2), AttackPlayer);
 
             this.board =  Board.Instance;
             this.board.GenerateBoard();
@@ -34,6 +34,18 @@ namespace cardGame
             Console.Clear();
 
             this.StartGame();
+        }
+
+        public void AttackPlayer(string player, int damage)
+        {
+            if (player == "Player 1")
+            {
+                this.Player2.GetAttackt(damage);
+            }
+            else
+            {
+                this.Player2.GetAttackt(damage);
+            }
         }
 
         public void StartGame()
